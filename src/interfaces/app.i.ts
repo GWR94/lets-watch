@@ -4,23 +4,11 @@ export interface AppState {
 }
 
 export interface AuthState {
-  profile: ProfileState;
+  uid: string;
 }
 
 export interface TMDBState {
-  movies: any;
+  movie: any;
   tv: any;
   current: any;
-}
-
-export interface ProfileState {
-  _id: string;
-  userID: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  tvShows: number[];
-  movies: number[];
-  error?: boolean;
-  image: string;
 }

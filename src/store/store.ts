@@ -4,7 +4,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import authReducer from "../reducers/auth.reducer";
 import tmdbReducer from "../reducers/tmdb.reducer";
 import { AppState } from "../interfaces/app.i";
-
+import { persistStore, persistReducer, Persistor } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 declare global {
   interface Window {
     // eslint-disable-next-line no-undef
@@ -12,13 +13,22 @@ declare global {
   }
 }
 
-export default (): Store => {
+export default (): { store: Store; persistor: Persistor } => {
+  const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["auth"],
+  };
+  const reducer = combineReducers({
+    auth: authReducer,
+    tmdb: tmdbReducer,
+  });
+
+  const persistedReducer = persistReducer(persistConfig, reducer);
   const store: Store<AppState> = createStore(
-    combineReducers({
-      auth: authReducer,
-      tmdb: tmdbReducer,
-    }),
+    persistedReducer,
     composeWithDevTools(applyMiddleware(thunk)),
   );
-  return store;
+  const persistor = persistStore(store);
+  return { store, persistor };
 };

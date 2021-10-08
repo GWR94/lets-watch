@@ -3,36 +3,27 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === "production";
-let Dotenv;
+
 if (!isProduction) {
   // eslint-disable-next-line global-require
-  Dotenv = require("dotenv-webpack");
+  require("dotenv").config();
 }
 module.exports = {
   entry: ["./src/app.tsx"],
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".mjs", ".ts", ".tsx", ".js", ".jsx"],
   },
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].bundle.js",
     publicPath: "/",
   },
-  node: {
-    fs: "empty",
-  },
   optimization: {
-    moduleIds: "hashed",
-    minimizer: [
-      new TerserPlugin({
-        extractComments: true,
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
+    moduleIds: "deterministic",
+    minimizer: [new OptimizeCSSAssetsPlugin({})],
     runtimeChunk: "single",
     splitChunks: {
       cacheGroups: {
@@ -57,6 +48,12 @@ module.exports = {
         enforce: "pre",
       },
       {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.(sa|sc|c)ss$/,
         use: [
           {
@@ -70,12 +67,8 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpg|jpeg|png|gif|svg|pdf|ico)$/i,
-        loader: "file-loader?name=[path][hash].[ext]",
-      },
-      {
-        test: /\.(mp3|wav|mpe?g)$/,
-        loader: "file-loader?name=[path][hash].[ext]",
+        test: /\.(jpg|jpeg|png|gif|svg|pdf|ico|woff|eot|ttf|mp3|wav|mpe?g)$/i,
+        type: "asset/resource",
       },
     ],
   },
@@ -89,46 +82,17 @@ module.exports = {
       template: "./public/index.html",
       // favicon: "./public/images/favicon.png"
     }),
-    new Dotenv(),
-    new webpack.EnvironmentPlugin([
-      "MONGO_DB_URI",
-      "REDDIT_CONSUMER_KEY",
-      "REDDIT_CONSUMER_SECRET",
-      "TMDB_API_KEY",
-      "TMDB_URL",
-    ]),
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
+    new webpack.EnvironmentPlugin(["COOKIE_KEY", "TMDB_API_KEY", "TMDB_URL"]),
   ],
   devtool: isProduction ? "source-map" : "inline-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "public"),
-    historyApiFallback: true,
-    port: 8080,
-    proxy: {
-      "/api/**": {
-        target: "http://localhost:8081",
-        secure: false,
-        changeOrigin: true,
-      },
-      "/auth/google": {
-        target: "http://localhost:8081",
-        secure: false,
-        changeOrigin: true,
-      },
-      "/auth/facebook": {
-        target: "http://localhost:8081",
-        secure: false,
-        changeOrigin: true,
-      },
-      "/auth/github": {
-        target: "http://localhost:8081",
-        secure: false,
-        changeOrigin: true,
-      },
-      "/auth/reddit": {
-        target: "http://localhost:8081",
-        secure: false,
-        changeOrigin: true,
-      },
+    static: {
+      directory: path.join(__dirname, "public"),
     },
+    historyApiFallback: true,
+    port: 3000,
   },
 };

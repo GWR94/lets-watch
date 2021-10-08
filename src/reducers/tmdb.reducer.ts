@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import {
   FETCH_TOP_MOVIES,
   FETCH_TOP_TV,
@@ -9,7 +8,7 @@ import {
 import { TMDBState } from "../interfaces/app.i";
 
 const defaultState: TMDBState = {
-  movies: null,
+  movie: null,
   tv: null,
   current: null,
 };
@@ -19,7 +18,7 @@ export default (state = defaultState, action: MovieActionTypes): TMDBState => {
     case FETCH_TOP_MOVIES:
       return {
         ...state,
-        movies: action.payload || null,
+        movie: action.payload || null,
       };
     case FETCH_TOP_TV:
       return {

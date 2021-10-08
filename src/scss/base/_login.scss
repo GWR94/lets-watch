@@ -1,0 +1,36 @@
+.login__container {
+  height: 100vh;
+  margin-top: -1px;
+  padding-top: 1px;
+  width: 100vw;
+}
+
+.login__title {
+  font-size: 24px;
+  text-align: center;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-weight: bold;
+}
+
+.login__text {
+  font-size: 16px;
+  text-align: center;
+  font-family: "Barlow Semi Condensed", sans-serif;
+}
+
+.login__button-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.login__icon {
+  width: 50px;
+  text-align: center;
+}
+
+.login__button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-evenly !important;
+}

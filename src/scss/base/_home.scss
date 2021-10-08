@@ -1,0 +1,38 @@
+.home__title {
+  color: $off-white;
+  font-size: 24px;
+  margin-bottom: 0;
+  font-family: "Barlow Semi Condensed", sans-serif;
+}
+
+.home__button--container {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.home__text {
+  font-size: 18px;
+  color: $off-white;
+}
+
+.home__welcome {
+  font-size: 22px;
+  color: $off-white;
+  font-style: italic;
+  text-align: center;
+}
+
+.home__saved {
+  font-size: 18px;
+  color: $off-white;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.app__container {
+  background: #131319;
+  min-height: 100vh;
+}

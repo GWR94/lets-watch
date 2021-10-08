@@ -1,0 +1,23 @@
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner, identityClaim: "sub", operations: [create, read, update, delete] }
+      { allow: private, provider: userPools, operations: [read] }
+      { allow: public, provider: iam, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  name: String
+  email: String
+  image: S3Image
+  tvShows: [Int]
+  movies: [Int]
+}
+
+type S3Image {
+  bucket: String!
+  region: String!
+  key: String!
+}
