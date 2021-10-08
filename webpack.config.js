@@ -85,7 +85,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
-    new webpack.EnvironmentPlugin(["COOKIE_KEY", "TMDB_API_KEY", "TMDB_URL"]),
+    new webpack.EnvironmentPlugin(["TMDB_API_KEY", "TMDB_URL"]),
   ],
   devtool: isProduction ? "source-map" : "inline-source-map",
   devServer: {
