@@ -152,7 +152,11 @@ const Media: React.FC<MediaProps> = ({ type }): JSX.Element => {
             />
           ) : (
             <div className="media__search--container">
-              <Typography className="media__text" style={{ margin: "10px 0 16px" }}>
+              <Typography
+                className="media__text"
+                style={{ margin: "10px 0 16px", textAlign: "center" }}
+                gutterBottom
+              >
                 Enter your desired search query below, and we&apos;ll find the closest
                 matches!
               </Typography>

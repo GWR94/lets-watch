@@ -12,7 +12,7 @@ import {
 import { API, Storage } from "aws-amplify";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { GetUserQuery, User } from "../../API";
 import { updateUser } from "../../graphql/mutations";
 import { getUser } from "../../graphql/queries";
@@ -227,8 +227,8 @@ const Profile = (): JSX.Element => {
           </Button>
         )}
       </div>
-      {tvShows.length > 0 && <WatchLater type="tv" media={tvShows} />}
-      {movies.length > 0 && <WatchLater type="movie" media={movies} />}
+      <WatchLater type="tv" media={tvShows} />
+      <WatchLater type="movie" media={movies} />
     </Container>
   );
 };

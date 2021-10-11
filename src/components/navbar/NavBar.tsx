@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -25,14 +25,32 @@ import { LogoutAction } from "../../interfaces/auth.redux.i";
 import Links from "./Links";
 import { AppState } from "../../interfaces/app.i";
 import LoginModal from "../common/LoginModal";
+import { getUser } from "../../graphql/queries";
+import { API, graphqlOperation } from "aws-amplify";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { GetUserQuery, S3ImageInput } from "../../API";
+import { AmplifyS3Image } from "@aws-amplify/ui-react";
 
 const NavBar = (): JSX.Element => {
   const [navOpen, setNavOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [image, setImage] = useState<S3ImageInput>(null);
 
   const { uid } = useSelector(({ auth }: AppState) => auth);
+
+  useEffect(() => {
+    const getUserData = async (): Promise<void> => {
+      const { data } = (await API.graphql(
+        graphqlOperation(getUser, { id: uid }),
+      )) as GraphQLResult<GetUserQuery>;
+      if (data.getUser.image) {
+        setImage(data.getUser.image);
+      }
+    };
+    getUserData();
+  }, []);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -82,11 +100,17 @@ const NavBar = (): JSX.Element => {
                     }
                   }}
                 >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
-                    alt="Profile"
-                    className="navbar__img"
-                  />
+                  {image ? (
+                    <div className="navbar__img">
+                      <AmplifyS3Image imgKey={image.key} />
+                    </div>
+                  ) : (
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                      alt="Profile"
+                      className="navbar__img"
+                    />
+                  )}
                   {uid ? "Account" : "Login"}
                 </div>
                 <Menu

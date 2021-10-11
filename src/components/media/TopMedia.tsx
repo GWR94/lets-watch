@@ -12,8 +12,6 @@ const TopMedia: React.FC<Props> = ({ type }): JSX.Element => {
   const media = useSelector(({ tmdb }: AppState) => tmdb[type]);
   const dispatch = useDispatch();
 
-  console.log(type);
-
   useEffect((): void => {
     type === "tv"
       ? dispatch(tmdbActions.fetchTopTV())

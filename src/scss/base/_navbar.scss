@@ -65,11 +65,12 @@
 
 .navbar__img {
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  height: 44px;
+  width: 44px;
   cursor: pointer;
   margin-right: 10px;
   border: 2px solid red;
+  overflow: hidden;
 }
 
 .navbar__profile {
@@ -86,6 +87,10 @@
     text-decoration: none;
     color: red;
   }
+}
+
+.carousel__container {
+  background: none !important;
 }
 
 .navbar__link {

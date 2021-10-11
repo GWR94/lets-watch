@@ -12,7 +12,7 @@ import { getUser } from "../../graphql/queries";
 import { useHistory } from "react-router-dom";
 import { API } from "aws-amplify";
 import { mobileStyles, styles } from "../../util/data";
-import { GetUserQuery, UpdateUserInput, UpdateUserMutation } from "../../API";
+import { GetUserQuery, UpdateUserInput } from "../../API";
 import { updateUser } from "../../graphql/mutations";
 
 interface ModalProps {

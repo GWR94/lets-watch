@@ -3,7 +3,7 @@ import { Container, Typography } from "@mui/material";
 import NavBar from "../navbar/NavBar";
 import TopMedia from "../media/TopMedia";
 import Button from "../../util/MuiButton";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AppState } from "../../interfaces/app.i";
 
@@ -14,7 +14,9 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div className="home__container">
       <Container style={{ paddingTop: 20 }}>
-        <p className="home__welcome">Welcome back </p>
+        <Typography variant="h4" className="discover__title" gutterBottom>
+          What's Going On...
+        </Typography>
         <p className="home__saved">
           Have a browse through the top watched TV & Movies, or search for some unknown
           gems by clicking below!

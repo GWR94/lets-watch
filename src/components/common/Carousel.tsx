@@ -15,6 +15,7 @@ const Carousel: React.FC<CarouselProps> = ({ media, type }) => {
     <Coverflow
       enableScroll
       clickable
+      style={{ background: "none" }}
       displayQuantityOfSide={desktop ? 2 : 1}
       currentFigureScale={1}
       otherFigureScale={0.8}
