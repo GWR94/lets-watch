@@ -100,7 +100,7 @@
     "dayjs": "^1.8.17",
     "dotenv": "^8.2.0",
     "history": "^4.10.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "normalize.css": "^8.0.1",
     "postcss": "^8.3.8",
     "process": "^0.11.10",
